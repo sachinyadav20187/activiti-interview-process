@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xmlns:activiti="http://activiti.org/bpmn"
+             xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI"
+             xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC"
+             xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI"
+             typeLanguage="http://www.w3.org/2001/XMLSchema"
+             expressionLanguage="http://www.w3.org/1999/XPath"
+             targetNamespace="http://www.activiti.org/processdef">
+
+    <process id="interviewProcess" name="Interview Process" isExecutable="true">
+        <startEvent id="start" name="Start"></startEvent>
+        <userTask id="interview" name="Interview Applicant" activiti:assignee="${interviewer}">
+            <extensionElements>
+                <activiti:formProperty id="interviewer" name="Interviewer" type="string" required="true"></activiti:formProperty>
+            </extensionElements>
+        </userTask>
+        <sequenceFlow id="flow1" sourceRef="start" targetRef="interview"></sequenceFlow>
+        <exclusiveGateway id="screening" name="Screening"></exclusiveGateway>
+        <sequenceFlow id="flow2" sourceRef="interview" targetRef="screening"></sequenceFlow>
+        <sequenceFlow id="flow3" sourceRef="screening" targetRef="select"></sequenceFlow>
+        <sequenceFlow id="flow4" sourceRef="screening" targetRef="reject"></sequenceFlow>
+        <endEvent id="select" name="Select Applicant"></endEvent>
+        <endEvent id="reject" name="Reject Applicant"></endEvent>
+    </process>
+
+</definitions>
